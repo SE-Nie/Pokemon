@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
+import AllPokemon from "./AllPokemon"
+import PokemonId from "./PokemonId"
+import PokemonInfo from "./PokemonInfo"
 import './App.css';
 
 function App() {
 
-  const [cities, setCities] = useState([])
-	const [restaurants, setRestaurants] = useState([])
-	const [tags, setTags] = useState([])
+  const [pokemon, setPokemon] = useState([])
+	const [pokeid, setPokeid] = useState([])
+	const [pokeinfo, setPokeinfo] = useState([])
 
 	useEffect(() => {
 		fetchData()
@@ -16,36 +19,36 @@ function App() {
   //Fetching the Data
   const fetchData = () => {
 		console.log('fetch is being called')
-		fetch('http://localhost:3000/cities')
+		fetch('http://localhost:3000/pokemon')
 			.then((response) => response.json())
-			.then((json) => setCities(json))
+			.then((json) => setPokemon(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		fetch('http://localhost:3000/restaurants')
+		fetch('http://localhost:3000/pokemon/:id')
 			.then((response) => response.json())
-			.then((json) => setRestaurants(json))
+			.then((json) => setPokeid(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		fetch('http://localhost:3000/tags')
+		fetch('http://localhost:3000/pokemon/:id/:info')
 			.then((response) => response.json())
-			.then((json) => setTags(json))
+			.then((json) => setPokeinfo(json))
 			//throw the error
 			.catch((err) => console.log(err))
   }
   
-
-{/*use data = {data} and useParams to get data to routes!*/}
+//Route-Setup
+//use data = {data}, props and useParams to get data to routes!
   return (
 		<div className='App'>
 				<Switch>
 					<Route exact path='/'>
-						<AllPokemon/>
+						<AllPokemon pokemon = {pokemon}/>
 					</Route>
 					<Route path='/:id'>
-						<PokemonInfo/>
+						<PokemonId pokeid = {pokeid} />
 					</Route>
 					<Route path='/:id/:info'>
-						<DetailedInfo/>
+						<PokemonInfo pokeinfo = {pokeinfo}/>
 					</Route>
 				</Switch>
 		</div>
