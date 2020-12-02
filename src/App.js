@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import AllPokemon from "./AllPokemon"
 import PokemonId from "./PokemonId"
 import PokemonInfo from "./PokemonInfo"
+import { CardDeck } from "react-bootstrap"
 import './App.css';
 
 function App() {
@@ -42,7 +43,9 @@ function App() {
 		<div className='App'>
 				<Switch>
 					<Route exact path='/'>
-						<AllPokemon pokemon = {pokemon}/>
+						<CardDeck>
+							<AllPokemon pokemon = {pokemon}/>
+						</CardDeck>
 					</Route>
 					<Route path='/:id'>
 						<PokemonId pokeid = {pokeid} />
