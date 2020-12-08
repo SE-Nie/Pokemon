@@ -20,31 +20,35 @@ function App() {
   //Fetching the Data
   const fetchData = () => {
 		console.log('fetch is being called')
-		fetch('http://localhost:3000/pokemon')
+		fetch( `http://pokemon-backend-wbs.herokuapp.com/pokemon`)
 			.then((response) => response.json())
 			.then((json) => setPokemon(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		fetch('http://localhost:3000/pokemon/:id')
+		fetch('http://localhost:4000/pokemon/:id')
 			.then((response) => response.json())
-			.then((json) => setPokeid(json))
+			.then((json) => setPokeid(json.id))
 			//throw the error
 			.catch((err) => console.log(err))
-		fetch('http://localhost:3000/pokemon/:id/:info')
+		fetch('http://localhost:4000/pokemon/:id/:info')
 			.then((response) => response.json())
-			.then((json) => setPokeinfo(json))
+			.then((json) => setPokeinfo(json)
+	  )
 			//throw the error
 			.catch((err) => console.log(err))
   }
-  
+
+
 //Route-Setup
 //use data = {data}, props and useParams to get data to routes!
   return (
 		<div className='App'>
+
+
 				<Switch>
-					<Route exact path='/'>
+					<Route path='/pokemon'>
 						<CardDeck>
-							<AllPokemon pokemon = {pokemon}/>
+							<AllPokemon pokemons = {pokemon}/>
 						</CardDeck>
 					</Route>
 					<Route path='/:id'>
