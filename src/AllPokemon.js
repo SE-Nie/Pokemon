@@ -1,33 +1,33 @@
 import React from 'react'
-import {Card, InputGroup } from "react-bootstrap"
+import { Row, Col, Container, Card, InputGroup } from 'react-bootstrap'
 import './App.css'
 
-
 export default function AllPokemon(props) {
-    return(
-        <>
-            {props.pokemons.map((pokemon) => (
-            <Card>
-                <Card.Img variant="top" src="#" />
-                <Card.Body>
-                    <Card.Title>this is from the card{pokemon[0]}</Card.Title>
-                    <Card.Text>
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.
-                    </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Prepend>
-                            <InputGroup.Checkbox />
-                            <p>POKEMON NAME</p>
-                        </InputGroup.Prepend>
-                    </InputGroup>
-                </Card.Footer>
-            </Card>
-            ))}
-
-        </>
-
-    )
+	return (
+		<>
+			<Container fluid>
+				<Row xs={1} sm={2} md={3} lg={4} xl={6}>
+					{props.pokemons.map((pokemon) => (
+						<Col>
+							<Card>
+								<Card.Img variant='top' src='#' />
+								<Card.Body>
+									<Card.Title>{pokemon.name.english}</Card.Title>
+									<Card.Text>TextTextText</Card.Text>
+								</Card.Body>
+								<Card.Footer>
+									<InputGroup className='mb-3'>
+										<InputGroup.Prepend>
+											<InputGroup.Checkbox />
+											<p>{pokemon.name.english}</p>
+										</InputGroup.Prepend>
+									</InputGroup>
+								</Card.Footer>
+							</Card>
+						</Col>
+					))}
+				</Row>
+			</Container>
+		</>
+	)
 }

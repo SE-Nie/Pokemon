@@ -25,7 +25,7 @@ function App() {
 			.then((json) => setPokemon(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		fetch('http://localhost:4000/pokemon/:id')
+		/*{fetch('http://localhost:4000/pokemon/:id')
 			.then((response) => response.json())
 			.then((json) => setPokeid(json.id))
 			//throw the error
@@ -34,7 +34,7 @@ function App() {
 			.then((response) => response.json())
 			.then((json) => setPokeinfo(json))
 			//throw the error
-			.catch((err) => console.log(err))
+			.catch((err) => console.log(err))}*/
 	}
 
 	//Route-Setup
