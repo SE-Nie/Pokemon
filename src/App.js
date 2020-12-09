@@ -52,7 +52,7 @@ function App() {
 					<PokemonId />
 				</Route>
 				<Route path='/pokemon/:id/:info'>
-					<PokemonInfo pokeinfo={pokeinfo} />
+					<PokemonInfo />
 				</Route>
 			</Switch>
 			<Footer />

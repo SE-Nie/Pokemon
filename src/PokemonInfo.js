@@ -18,13 +18,24 @@ export default function PokemonId() {
 			.catch((err) => console.log(err))
 	}
 
-	return (
-		<>
-			<p>hi</p>
-			{pokemon.map((e) => (
-				<li>{e}</li>
-			))}
-			{console.log(pokemon)}
-		</>
-	)
+	if (pokemon) {
+		if (info === 'type') {
+			return (
+				<>
+					<p>hi</p>
+					{pokemon.map((e) => (
+						<li>{e}</li>
+					))}
+				</>
+			)
+		} else {
+			return Object.entries(pokemon).map((e) => (
+				<li>
+					{e[0]}={e[1]}
+				</li>
+			))
+		}
+	} else {
+		return <h1>loading..</h1>
+	}
 }
