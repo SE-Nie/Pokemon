@@ -8,6 +8,7 @@ import Header from './Header'
 import Footer from './Footer'
 import './App.css'
 
+
 function App() {
 	const [pokemon, setPokemon] = useState([])
 
@@ -49,10 +50,14 @@ function App() {
 					</CardDeck>
 				</Route>
 				<Route exact path='/pokemon/:id'>
+					<CardDeck>
 					<PokemonId />
+					</CardDeck>
 				</Route>
 				<Route path='/pokemon/:id/:info'>
+				<CardDeck>
 					<PokemonInfo />
+			</CardDeck>
 				</Route>
 			</Switch>
 			<Footer />
