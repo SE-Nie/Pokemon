@@ -10,7 +10,7 @@ import './App.css'
 
 function App() {
 	const [pokemon, setPokemon] = useState([])
-	const [pokeid, setPokeid] = useState([])
+
 	const [pokeinfo, setPokeinfo] = useState([])
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ function App() {
 			.then((json) => setPokemon(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		/*{fetch('http://localhost:4000/pokemon/:id')
+		/*{fetch('http://pokemon-backend-wbs.herokuapp.com/pokemon/:id')
 			.then((response) => response.json())
 			.then((json) => setPokeid(json.id))
 			//throw the error
@@ -43,15 +43,15 @@ function App() {
 		<div className='App'>
 			<Header />
 			<Switch>
-				<Route path='/pokemon'>
+				<Route exact path='/pokemon'>
 					<CardDeck>
 						<AllPokemon pokemons={pokemon} />
 					</CardDeck>
 				</Route>
-				<Route path='/:id'>
-					<PokemonId pokeid={pokeid} />
+				<Route exact path='/pokemon/:id'>
+					<PokemonId />
 				</Route>
-				<Route path='/:id/:info'>
+				<Route path='/pokemon/:id/:info'>
 					<PokemonInfo pokeinfo={pokeinfo} />
 				</Route>
 			</Switch>
