@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function PokemonId() {
 	const { id, info } = useParams()
