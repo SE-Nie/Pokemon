@@ -9,6 +9,7 @@ import {
 	Button,
 } from 'react-bootstrap'
 import './App.css'
+import SearchForm from './SearchForm'
 
 export default function Header() {
 	return (
@@ -18,13 +19,12 @@ export default function Header() {
 					src='pokemon-logo.png'
 					height='50'
 					className='d-inline-block align-top mr-3'
-					alt='React Bootstrap logo'
+					alt='Pokemon logo'
 				/>
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls='basic-navbar-nav' />
 			<Navbar.Collapse id='basic-navbar-nav'>
 				<Nav className='mr-auto'>
-					<NavLink href='#home'>Home</NavLink>
 					<NavLink href='#link'>Link</NavLink>
 					<NavDropdown title='Dropdown' id='basic-nav-dropdown'>
 						<NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
@@ -38,8 +38,18 @@ export default function Header() {
 						</NavDropdown.Item>
 					</NavDropdown>
 				</Nav>
+				{/* <SearchForm
+					onSubmit={props.handleSubmit}
+					type='text'
+					value={props.value}
+					onChange={props.handleChange}
+				/> */}
 				<Form inline>
-					<FormControl type='text' placeholder='Search' className='mr-sm-2' />
+					<FormControl
+						type='text'
+						placeholder='Search for Pokemon'
+						className='mr-sm-2'
+					/>
 					<Button variant='outline-success'>Search</Button>
 				</Form>
 			</Navbar.Collapse>
