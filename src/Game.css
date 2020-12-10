@@ -1,0 +1,15 @@
+.left {
+	float: left;
+}
+.middle {
+	float: center;
+}
+.right {
+	float: right;
+}
+.spinner {
+	height: 100px;
+}
+.no-bullets {
+	list-style-type: none; /* Remove bullets */
+}
