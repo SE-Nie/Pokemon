@@ -12,10 +12,10 @@ import './App.css'
 function App() {
 	const [pokemon, setPokemon] = useState([])
 
-	const [pokeinfo, setPokeinfo] = useState([])
 
 	useEffect(() => {
 		fetchData()
+
 	}, [])
 
 	//Fetching the Data
@@ -26,17 +26,8 @@ function App() {
 			.then((json) => setPokemon(json))
 			//throw the error
 			.catch((err) => console.log(err))
-		/*{fetch('http://pokemon-backend-wbs.herokuapp.com/pokemon/:id')
-			.then((response) => response.json())
-			.then((json) => setPokeid(json.id))
-			//throw the error
-			.catch((err) => console.log(err))
-		fetch('http://localhost:4000/pokemon/:id/:info')
-			.then((response) => response.json())
-			.then((json) => setPokeinfo(json))
-			//throw the error
-			.catch((err) => console.log(err))}*/
 	}
+
 
 	//Route-Setup
 	//use data = {data}, props and useParams to get data to routes!

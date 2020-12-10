@@ -21,14 +21,6 @@ export default function PokemonId() {
 			.catch((err) => console.log(err))
 	}
 
-	const fetchPokeImages = () => {
-		fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-			.then((res)=> res.json())
-			.then((images)=> setPokeImage(images.results))
-	}
-
-
-	console.log(pokeImage)
 	return (
 		<>
 
