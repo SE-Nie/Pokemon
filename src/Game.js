@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { Spinner } from 'react-bootstrap'
+import { Col, Container, Row, Spinner } from 'react-bootstrap'
+import PlayingCard from './PlayingCard'
 import './Game.css'
 
-export default function Game() {
+export default function Game(props) {
+	/* 	var player1 = []
+	var player2 = []
+	const createPokemon = () => {
+		for (let a = 0; a < 5; a++) {
+			var index1 = Math.floor(Math.random() * 810)
+			var index2 = Math.floor(Math.random() * 810)
+			player1.push(props.pokemons[index1])
+			player2.push(props.pokemons[index2])
+		}
+	}
+	useEffect(() => {
+		createPokemon()
+	}, []) */
+
 	var player1 = [
 		{
 			id: 1,
@@ -200,6 +215,8 @@ export default function Game() {
 	let [pointsPlayer1, setPointsPlayer1] = useState(0)
 	let [pointsPlayer2, setPointsPlayer2] = useState(0)
 
+	let [gameCondition, setGameCondition] = useState('start')
+
 	useEffect(() => {
 		whoIsFirst()
 	}, [pokemon1.speed, pokemon2.speed])
@@ -216,12 +233,17 @@ export default function Game() {
 
 	useEffect(() => {
 		if (!oneIsNext && alive) {
+			setGameCondition('computerAttack')
 			computerAttack()
+		} else if (!alive) {
+			setGameCondition('dead')
+			setPokemon1(player1[0].base)
 		}
 	}, [oneIsNext])
 
 	const hadleClick = () => {
 		if (oneIsNext && alive) {
+			setGameCondition('player1Attack')
 			playerOneAttack()
 		} else {
 			alert('Wait for your turn!')
@@ -229,43 +251,14 @@ export default function Game() {
 	}
 
 	const playerOneAttack = () => {
-		console.log('player one is attackig!')
+		setTimeout(() => {
+			console.log('player one is attackig!')
 
-		pokemon2.HP =
-			pokemon2.HP - Math.floor((pokemon2.Defense / 100) * pokemon1.Attack)
+			pokemon2.HP =
+				pokemon2.HP - Math.floor((pokemon2.Defense / 100) * pokemon1.Attack)
 
-		setOneIsNext(false)
-		setPointsPlayer1(
-			pointsPlayer1 + Math.floor((pokemon2.Defense / 100) * pokemon1.Attack)
-		)
-		console.log(
-			pokemon1.HP,
-			pokemon2.HP,
-			'Player ones turn:',
-			oneIsNext,
-			pointsPlayer1,
-			pointsPlayer2
-		)
-		if (pokemon2.HP <= 0) {
-			console.log('Computers pokemon dies')
-			setJ(j + 1)
-			if (j < 4) {
-				setPokemon2(player2[j].base)
-			} else {
-				console.log('computer is dead!')
-				setAlive(false)
-			}
-		}
-	}
-	const computerAttack = () => {
-		if (alive) {
-			console.log('computer is attackig!')
-			setOneIsNext(true)
-			pokemon1.HP =
-				pokemon1.HP - Math.floor((pokemon1.Defense / 100) * pokemon2.Attack)
-
-			setPointsPlayer2(
-				pointsPlayer2 + Math.floor((pokemon1.Defense / 100) * pokemon2.Attack)
+			setPointsPlayer1(
+				pointsPlayer1 + Math.floor((pokemon2.Defense / 100) * pokemon1.Attack)
 			)
 			console.log(
 				pokemon1.HP,
@@ -275,42 +268,165 @@ export default function Game() {
 				pointsPlayer1,
 				pointsPlayer2
 			)
-			if (pokemon1.HP <= 0) {
-				console.log('Player1 pokemon dies')
-				setI(i + 1)
-				if (i < 4) {
+
+			if (pokemon2.HP <= 0) {
+				if (j >= 4) {
+					setAlive(false)
+					setGameCondition('computerdead')
+					setJ(0)
+
+					setOneIsNext(true)
+				} else {
+					setJ(j + 1)
+					setOneIsNext(false)
+					setGameCondition('player1Next')
+					setPokemon2(player2[j].base)
+					whoIsFirst()
+				}
+				setPokemon2(player2[j].base)
+			} else {
+				setGameCondition('player1Next')
+				setOneIsNext(false)
+			}
+		}, 1000)
+	}
+	const computerAttack = () => {
+		setTimeout(() => {
+			if (alive) {
+				console.log('computer is attackig!')
+
+				pokemon1.HP =
+					pokemon1.HP - Math.floor((pokemon1.Defense / 100) * pokemon2.Attack)
+
+				setPointsPlayer2(
+					pointsPlayer2 + Math.floor((pokemon1.Defense / 100) * pokemon2.Attack)
+				)
+
+				console.log(
+					pokemon1.HP,
+					pokemon2.HP,
+					'Player ones turn:',
+					oneIsNext,
+					pointsPlayer1,
+					pointsPlayer2
+				)
+				if (pokemon1.HP <= 0) {
+					if (i >= 4) {
+						setAlive(false)
+						setGameCondition('player1dead')
+						setI(0)
+
+						setOneIsNext(true)
+					} else {
+						setI(i + 1)
+						setOneIsNext(true)
+						setGameCondition('player1Next')
+						setPokemon1(player1[i].base)
+					}
 					setPokemon1(player1[i].base)
 				} else {
-					console.log('player1 is dead!')
-					setAlive(false)
+					setGameCondition('player1Next')
+					setOneIsNext(true)
 				}
 			}
+		}, 1000)
+	}
+
+	const conditionSwitch = () => {
+		switch (gameCondition) {
+			case 'start':
+				return (
+					<>
+						<p>New Game!</p>
+						<p>
+							{oneIsNext ? player1[i].name.english : player2[j].name.english}{' '}
+							attacks first.
+						</p>
+					</>
+				)
+			case 'player1Attack':
+				return (
+					<>
+						<p>{player1[i].name.english} attacks!</p>
+						<Spinner animation='grow' variant='danger' className='spinner' />
+					</>
+				)
+
+			case 'computerAttack':
+				return (
+					<>
+						<p>{player2[j].name.english} attacks!</p>
+						<Spinner animation='grow' variant='warning' className='spinner' />
+					</>
+				)
+			case 'player1Next':
+				return (
+					<>
+						<p>{player1[i].name.english} attacks next!</p>
+					</>
+				)
+			case 'player1dead':
+				return (
+					<>
+						<p>Your Opponent won the game.</p>
+					</>
+				)
+			case 'computerdead':
+				return (
+					<>
+						<p>You won the game.</p>
+					</>
+				)
+			default:
+				return <p className='p'>"something went very very wrong..."</p>
 		}
 	}
 
 	return (
-		<>
-			<div className='left'>
-				<h3>You</h3>
-				<ul className='no-bullets'>
-					<li>Current Pokemon: {player1[i].name.english}</li>
-					<li>HP: {pokemon1.HP}</li>
-					<li>Score: {pointsPlayer1}</li>
-				</ul>
-				<button onClick={hadleClick}>Attack</button>
-			</div>
-			<div className='middle'>
-				<h3>FIGHT!</h3>
-				<Spinner animation='grow' variant='warning' className='spinner' />
-			</div>
-			<div className='right'>
-				<h3>Opponent</h3>'
-				<ul className='no-bullets'>
-					<li>Current Pokemon: {player2[j].name.english}</li>
-					<li>HP: {pokemon2.HP}</li>
-					<li>Score: {pointsPlayer2}</li>
-				</ul>
-			</div>
-		</>
+		<div className='wrapper'>
+			<Container fluid>
+				<Row>
+					<Col>
+						<h3>Your Cards</h3>
+					</Col>
+					<Col></Col>
+					<Col>
+						<h3>Opponent's Cards</h3>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<PlayingCard
+							id={player1[i].id}
+							hp={pokemon1.HP}
+							attack={pokemon1.Attack}
+							defense={pokemon1.Defense}
+							name={player1[i].name.english}
+						/>
+					</Col>
+					<Col>{conditionSwitch()}</Col>
+					<Col>
+						<PlayingCard
+							id={player2[j].id}
+							hp={pokemon2.HP}
+							attack={pokemon2.Attack}
+							defense={pokemon2.Defense}
+							name={player2[j].name.english}
+						/>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<h5>Your Score: {pointsPlayer1}</h5>
+					</Col>
+					<Col className='cardtitle'>
+						<button onClick={hadleClick}>Attack</button>
+					</Col>
+					<Col>
+						<h5> Opponent's Score: {pointsPlayer2}</h5>
+					</Col>
+				</Row>
+			</Container>
+		</div>
 	)
 }

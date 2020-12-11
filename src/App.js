@@ -11,7 +11,6 @@ import './App.css'
 
 function App() {
 	const [pokemon, setPokemon] = useState([])
-	const [pokeinfo, setPokeinfo] = useState([])
 
 	useEffect(() => {
 		fetchData()
@@ -30,27 +29,31 @@ function App() {
 	//Route-Setup
 	//use data = {data}, props and useParams to get data to routes!
 	return (
-		<>
+		<div>
 			<Header />
-			<Switch>
-				<Route exact path='/pokemon'>
-					<CardDeck>
-						<AllPokemon pokemons={pokemon} />
-					</CardDeck>
-				</Route>
-				<Route exact path='/pokemon/:id'>
-					<CardDeck>
-						<PokemonId />
-					</CardDeck>
-				</Route>
-				<Route path='/pokemon/:id/:info'>
-					<CardDeck>
-						<PokemonInfo />
-					</CardDeck>
-				</Route>
-			</Switch>
-			<Footer />
-		</>
+			<div>
+				<Switch>
+					<Route exact path='/pokemon'>
+						<CardDeck>
+							<AllPokemon pokemons={pokemon} />
+						</CardDeck>
+					</Route>
+					<Route exact path='/pokemon/:id'>
+						<CardDeck>
+							<PokemonId />
+						</CardDeck>
+					</Route>
+					<Route path='/pokemon/:id/:info'>
+						<CardDeck>
+							<PokemonInfo />
+						</CardDeck>
+					</Route>
+					<Route path='/game'>
+						<Game pokemona={pokemon} />
+					</Route>
+				</Switch>
+			</div>
+		</div>
 	)
 }
 
