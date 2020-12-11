@@ -49,7 +49,7 @@ function App() {
 						</CardDeck>
 					</Route>
 					<Route path='/game'>
-						<Game pokemona={pokemon} />
+						<Game pokemons={pokemon} />
 					</Route>
 				</Switch>
 			</div>
